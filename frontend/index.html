@@ -33,12 +33,42 @@
           <ul id="todos" class="list-group"></ul>
         </div>
       </div>
+
+      <h1>Oulu weather</h1>
+      <p id="weather">Loading weather...</p>
+      <p id="windspeed"></p>
+      <p id="temperature"></p>
     </main>
     <script>
       const form = document.getElementById("todo-form");
       const titleInput = document.getElementById("todo-title");
       const todosElement = document.getElementById("todos");
       const statusElement = document.getElementById("status");
+
+      async function loadWeather() {
+        const weatherElement = document.querySelector("#weather");
+        const windspeedElement = document.querySelector("#windspeed");
+        const temperatureElement = document.querySelector("#temperature");
+
+        try {
+          const response = await fetch("/api/weather");
+
+          if (!response.ok) {
+            throw new Error(`Weather request failed (${response.status})`);
+          }
+
+          const data = await response.json();
+          weatherElement.textContent = data.current.summary;
+          windspeedElement.textContent =
+            "Windspeed: " + data.current.wind.speed + " m/s";
+          temperatureElement.textContent =
+            "Temperature: " + data.current.temperature + " °c";
+        } catch (error) {
+          weatherElement.textContent = `Unable to load weather: ${error.message}`;
+        }
+      }
+
+      loadWeather();
 
       async function loadTodos() {
         const response = await fetch("/api/todos");
@@ -104,7 +134,7 @@
       });
     </script>
     <a
-      href="https://a3s.fi/swift/v1/LEMPPDF/Lemp%20assignment%20Roni%20Kokkonen.pdf"
+      href="https://a3s.fi/swift/v1/cloudservicesproject/Lemp%20assignment%20Roni%20Kokkonen.pdf"
       target="_blank"
       rel="noopener"
     >

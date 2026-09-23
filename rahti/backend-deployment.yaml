@@ -38,3 +38,8 @@ spec:
                 secretKeyRef:
                   name: mysql-secret
                   key: DB_PASSWORD
+            - name: METEOSOURCE_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: weather-secret
+                  key: METEOSOURCE_API_KEY

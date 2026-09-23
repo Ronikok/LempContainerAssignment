@@ -25,6 +25,7 @@ services:
       DB_USER: ${DB_USER}
       DB_PASSWORD: ${DB_PASSWORD}
       DB_NAME: ${DB_NAME}
+      METEOSOURCE_API_KEY: ${METEOSOURCE_API_KEY}
     depends_on:
       db:
         condition: service_healthy

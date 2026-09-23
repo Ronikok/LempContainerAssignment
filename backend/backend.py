@@ -1,6 +1,10 @@
 from flask import Flask, jsonify, request
+import json
 import os
 import mysql.connector
+from urllib.error import HTTPError, URLError
+from urllib.parse import urlencode
+from urllib.request import urlopen
 
 app = Flask(__name__)
 
@@ -8,6 +12,7 @@ DB_HOST = os.getenv('DB_HOST', 'db')
 DB_USER = os.getenv('DB_USER', 'appuser')
 DB_PASSWORD = os.getenv('DB_PASSWORD')
 DB_NAME = os.getenv('DB_NAME', 'appdb')
+METEOSOURCE_API_KEY = os.getenv('METEOSOURCE_API_KEY')
 
 def get_connection():
 	return mysql.connector.connect(
@@ -24,6 +29,27 @@ def health():
 @app.get('/api')
 def index():
     return jsonify(message='Todo API version 1.0.1')
+
+@app.get('/api/weather')
+def get_weather():
+	if not METEOSOURCE_API_KEY:
+		return jsonify(error='weather service is not configured'), 503
+
+	params = urlencode({
+		'place_id': 'oulu',
+		'sections': 'current',
+		'units': 'metric',
+		'key': METEOSOURCE_API_KEY,
+	})
+
+	try:
+		with urlopen(
+			f'https://www.meteosource.com/api/v1/free/point?{params}',
+			timeout=10,
+		) as response:
+			return jsonify(json.loads(response.read()))
+	except (HTTPError, URLError, TimeoutError, ValueError):
+		return jsonify(error='weather service request failed'), 502
 
 @app.get('/api/todos')
 def get_todos():
