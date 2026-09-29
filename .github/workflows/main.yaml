@@ -38,5 +38,4 @@ jobs:
       - name: Deploy to Rahti
         run: |
           oc login --token=${{ secrets.RAHTI_TOKEN }} --server=${{ secrets.RAHTI_SERVER }}
-          oc project cloudservicesproject2
           oc set image deployment/backend backend=${{ env.IMAGE }}
