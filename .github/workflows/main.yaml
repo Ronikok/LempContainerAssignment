@@ -17,7 +17,7 @@ jobs:
         run: echo "REPO=$(echo '${{ github.repository }}' | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
 
       - name: Set image name
-        run: echo "IMAGE=${{ secrets.DOCKER_USERNAME }}/lempcontainerassignment-backend:${{ github.sha }}" >> $GITHUB_ENV
+        run: echo "IMAGE=${{ secrets.DOCKER_USERNAME }}/lemp-backend:${{ github.sha }}" >> $GITHUB_ENV
 
       - name: Build container image
         run: docker build -f ./backend/Dockerfile -t ${{ env.IMAGE }} .
