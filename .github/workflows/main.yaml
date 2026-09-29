@@ -23,9 +23,9 @@ jobs:
         run: echo "${{ secrets.DOCKER_TOKEN }}" | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
 
       - name: Push image
-        run: docker push ghcr.io/${{ env.REPO }}/backend:${{ github.sha }}
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/lempcontainerassignment-backend:${{ github.sha }}
 
       - name: Deploy to Rahti
         run: |
           oc login --token=${{ secrets.RAHTI_TOKEN }} --server=${{ secrets.RAHTI_SERVER }}
-          oc set image deployment/backend backend=ghcr.io/${{ env.REPO }}/backend:${{ github.sha }}
+          oc set image deployment/backend backend=${{ secrets.DOCKER_USERNAME }}/lempcontainerassignment-backend:${{ github.sha }}
