@@ -13,16 +13,19 @@ jobs:
       - name:
         run: echo "Building and deploying backend..."
 
+      - name: Set lowercase repository name
+        run: echo "REPO=$(echo '${{ github.repository }}' | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
+
       - name: Build container image
-        run: docker build -t ghcr.io/${{ toLower(github.repository) }}/backend:${{ github.sha }} ./backend
+        run: docker build -t ghcr.io/${{ env.REPO }}/backend:${{ github.sha }} ./backend
 
       - name: Log in to registry
         run: echo "${{ secrets.REGISTRY_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
       - name: Push image
-        run: docker push ghcr.io/${{ toLower(github.repository) }}/backend:${{ github.sha }}
+        run: docker push ghcr.io/${{ env.REPO }}/backend:${{ github.sha }}
 
       - name: Deploy to Rahti
         run: |
           oc login --token=${{ secrets.RAHTI_TOKEN }} --server=${{ secrets.RAHTI_SERVER }}
-          oc set image deployment/backend backend=ghcr.io/${{ toLower(github.repository) }}/backend:${{ github.sha }}
+          oc set image deployment/backend backend=ghcr.io/${{ env.REPO }}/backend:${{ github.sha }}
