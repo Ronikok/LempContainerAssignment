@@ -10,6 +10,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name:
+        run: echo "Building and deploying backend..."
+
       - name: Build container image
         run: docker build -t ghcr.io/${{ github.repository }}/backend:${{ github.sha }} ./backend
 

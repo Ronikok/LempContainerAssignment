@@ -111,6 +111,7 @@ def delete_todo(todo_id):
 		return jsonify(error='todo not found'), 404
 	return '', 204
 
+
 if __name__ == '__main__':
 	# Dev-only fallback
 	app.run(host='0.0.0.0', port=8000, debug=True)
