@@ -22,8 +22,12 @@ def get_connection():
 		database=DB_NAME,
 	)
 
-@app.get('/api/health')
+@app.get('/api/healthz')
 def health():
+	return {'status': 'ok'}
+
+@app.get('/api/readyz')
+def ready():
 	return {'status': 'ok'}
 
 @app.get('/api')

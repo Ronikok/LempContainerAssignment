@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: backend
-          image: ronikokkonen/lemp-backend:1.0.1
+          image: ronikokkonen/lemp-backend:latest
           ports:
             - containerPort: 8000
           env:
