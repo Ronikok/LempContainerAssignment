@@ -17,13 +17,13 @@ spec:
           image: ronikokkonen/lemp-backend:latest
           livenessProbe:
             httpGet:
-              path: /healthz
+              path: /api/healthz
               port: 8000
             initialDelaySeconds: 10
             periodSeconds: 15
           readinessProbe:
             httpGet:
-              path: /readyz
+              path: /api/readyz
               port: 8000
             initialDelaySeconds: 5
             periodSeconds: 10
