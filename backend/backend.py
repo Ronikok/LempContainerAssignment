@@ -28,7 +28,7 @@ def healthz():
 
 @app.get('/api/readyz')
 def readyz():
-	return {'status': 'ok'}, 200
+	return {'status': 'not ready'}, 500
 
 @app.get('/api')
 def index():
