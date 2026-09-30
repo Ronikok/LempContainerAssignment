@@ -15,6 +15,18 @@ spec:
       containers:
         - name: backend
           image: ronikokkonen/lemp-backend:latest
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 5000
+            initialDelaySeconds: 10
+            periodSeconds: 15
+          readinessProbe:
+            httpGet:
+              path: /readyz
+              port: 5000
+            initialDelaySeconds: 5
+            periodSeconds: 10
           ports:
             - containerPort: 8000
           env:
