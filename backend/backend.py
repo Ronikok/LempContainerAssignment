@@ -23,12 +23,12 @@ def get_connection():
 	)
 
 @app.get('/api/healthz')
-def health():
-	return {'status': 'ok'}
+def healthz():
+	return {'status': 'ok'}, 200
 
 @app.get('/api/readyz')
-def ready():
-	return {'status': 'ok'}
+def readyz():
+	return {'status': 'ok'}, 200
 
 @app.get('/api')
 def index():
