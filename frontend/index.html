@@ -36,7 +36,17 @@
       </div>
 
       <h1>Oulu weather</h1>
-      <p id="weather">Loading weather...</p>
+      <div class="d-flex align-items-center gap-2">
+        <p id="weather" class="mb-0">Loading weather...</p>
+        <img
+          id="weather-icon"
+          src=""
+          alt="Weather icon"
+          width="48"
+          height="48"
+          class="object-fit-contain"
+        />
+      </div>
       <p id="windspeed"></p>
       <p id="temperature"></p>
 
@@ -86,6 +96,9 @@
             "Windspeed: " + data.current.wind.speed + " m/s";
           temperatureElement.textContent =
             "Temperature: " + data.current.temperature + " °c";
+          const iconNumber = data.current.icon_num;
+          const imgUrl = `https://a3s.fi/swift/v1/cloudservicesproject/small/${iconNumber}.png`;
+          document.getElementById("weather-icon").src = imgUrl;
         } catch (error) {
           weatherElement.textContent = `Unable to load weather: ${error.message}`;
         }
